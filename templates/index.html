@@ -41,6 +41,9 @@
                 <div class="result">
                     <h2>Prediction Result</h2>
                     <h3>{{ prediction }}</h3>
+                    {% if database_message %}
+                        <p>{{ database_message }}</p>
+                      {% endif %}
 
                     {% if confidence is not none %}
                         <p>Model Confidence: {{ confidence }}%</p>
