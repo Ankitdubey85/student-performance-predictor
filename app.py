@@ -98,10 +98,9 @@ def home():
 
                     database_message = "Prediction saved successfully!"
 
-                except Exception as error:
-                    print("Database save error:", error)
-                    database_message = "Prediction completed, but database save failed."
-
+ except Exception as error:
+    print("Database save error:", error)
+    database_message = "Database Error: " + str(error)
             else:
                 database_message = "Database is not connected."
 
