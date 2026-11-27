@@ -1,5 +1,6 @@
 
 
+
 from flask import Flask, render_template, request
 import joblib
 import numpy as np
@@ -61,16 +62,25 @@ def home():
 
             if hasattr(model, "predict_proba"):
                 probabilities = model.predict_proba(scaled_data)[0]
-                confidence = round(float(max(probabilities)) * 100, 2)
+                confidence = round(
+                    float(max(probabilities)) * 100, 2
+                )
 
+            # Academic improvement suggestions
             if attendance < 75:
-                suggestions.append("Improve your class attendance.")
+                suggestions.append(
+                    "Improve your class attendance."
+                )
 
             if study_hours < 3:
-                suggestions.append("Try to study at least 3 hours daily.")
+                suggestions.append(
+                    "Try to study at least 3 hours daily."
+                )
 
             if assignment_score < 60:
-                suggestions.append("Focus more on assignment practice.")
+                suggestions.append(
+                    "Focus more on assignment practice."
+                )
 
             if not suggestions:
                 suggestions.append(
@@ -86,9 +96,7 @@ def home():
                     "previous_score": previous_score,
                     "assignment_score": assignment_score,
                     "internal_marks": internal_marks,
-                    "prediction": prediction,
-                    "confidence": confidence,
-                    "suggestions": suggestions
+                    "predicted_performance": prediction
                 }
 
                 try:
@@ -96,11 +104,16 @@ def home():
                         "student_submissions"
                     ).insert(record).execute()
 
-                    database_message = "Prediction saved successfully!"
+                    database_message = (
+                        "Prediction saved successfully!"
+                    )
 
- except Exception as error:
-    print("Database save error:", error)
-    database_message = "Database Error: " + str(error)
+                except Exception as error:
+                    print("Database save error:", error)
+                    database_message = (
+                        "Database Error: " + str(error)
+                    )
+
             else:
                 database_message = "Database is not connected."
 
@@ -118,5 +131,9 @@ def home():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=False)
+    app.run(
+        host="0.0.0.0",
+        port=port,
+        debug=False
+    )
 
